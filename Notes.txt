@@ -1,0 +1,63 @@
+SPRING MVC
+
+- Creating a Spring Home Controller and View:
++ Development process:
+i. Create Controller Class:
+* Annotate class with @Controller
+* @Controller inherits from @Component...supports scanning 
+* Example:
+	@Controller
+	public class ... {
+	}
+
+ii. Define Controller method. Example:
+public String showMyPage() {}
+
+iii. Add Request Maping to Controller method
+	@RequestMapping("/")
+	public String showMyPage() {}
+
+iv. Return View Name. Based on the config (suffix and prefix), Spring will find the page
+	return "main-menu"
+
+v. Develop the view page
+
+- Reading HTML form data:
++ Spring form data binding is doing most of of the work for us in the background.
+
++ After submitting the data entry, studentName is sent as a URL parameter value to our helloworld jsp page because we have the forms action attribute set to "processForm".  And in our Controller we have a request mapping set up for "/processForm" the corresponding method which takes us to our "helloworld.jsp" pasge.  So after hitting submit you see:
+
+	http://localhost:8080/spring-mvc-demo/processForm?studentName=John 
+
++ We then access the studentName parameter using the jsp expression ${param.studentName}
+
+- Adding Data to the Spring model
++ Spring model: The model is a container for the application data
++ In the controller, we can put anything in the model (string, objects, info from database,...)
++ The view page (jsp) can access data from the model
+
+- How to access CSS, JS, Img files?
+
++ Step 1: Add the following entry to the Spring MVC config file:
+<mvc:resources mapping="/resources/**" location="/resources/"></mvc:resources>
+
++ Step 2: Now in your view pages, you can access the static files using this syntax:
+
+<img src="${pageContext.request.contextPath}/resources/images/spring-logo.png"> 
+
+You need to use the JSP expression ${pageContext.request.contextPath} to access the correct root directory for your web application.
+
+Apply the same technique for reading CSS and JavaScript.
+
+- Request Params and Request Mappings:
++ Instead of using HttpServletRequest, we bind variable using @RequestParam Annotation. For example:
+	public String method(@RequestParam("studentName") String name, Model model).
+	
+	In the background, Spring will read param from request: studentName, and then bind it to the variable: name
+	
+- Controller level RequestMapping: 
++ We can add request mapping to the controller. It will serve as parent mapping for controller, all request mappings on methods in the controller are relative (Similar to folder directory structures)
+
+
+
+
